@@ -223,12 +223,7 @@ const Index = () => {
               imageSrc="/img/Koji.JPG"
               imagePosition="top"
             />
-            <TeamMember 
-              name="Zero Koga" 
-              role="Co-Fundador & Especialista Em Mídias"
-              imageSrc="/img/Koga.jpg"
-              imagePosition="top"
-            />
+          
             <TeamMember 
               name="Hassan Deraoui" 
               role="Co-Fundador & Developer Visual"
