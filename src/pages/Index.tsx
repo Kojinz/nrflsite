@@ -208,6 +208,12 @@ const Index = () => {
               description="Produzimos conteúdo relevante e estratégico que atrai, engaja e converte seu público-alvo."
               icon={<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M12 3v12"/><path d="m8 11 4 4 4-4"/><path d="M8 5H4a2 2 0 0 0-2 2v10a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2h-4"/></svg>}
             />
+            <ServiceCard 
+              title="Transmissão de Eventos & Broadcast" 
+              description="Infraestrutura e operação técnica completa para transmissão ao vivo de eventos, feiras, shows e workshops com corte multicâmera (Tricaster, OBS) e encoders dedicados."
+              icon={<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M4.9 19.1C1 15.2 1 8.8 4.9 4.9"/><path d="M7.8 16.2c-2.3-2.3-2.3-6.1 0-8.5"/><circle cx="12" cy="12" r="2"/><path d="M16.2 7.8c2.3 2.3 2.3 6.1 0 8.5"/><path d="M19.1 4.9C23 8.8 23 15.1 19.1 19"/></svg>}
+              className="md:col-span-2 md:max-w-md md:mx-auto lg:col-span-1 lg:col-start-2 lg:max-w-none"
+            />
           </div>
         </div>
       </section>
@@ -216,7 +222,7 @@ const Index = () => {
       <section id="equipe" className="py-20 px-6 md:px-12 lg:px-24">
         <div className="max-w-6xl mx-auto">
           <SectionTitle>Conheça Nossa Equipe</SectionTitle>
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-8 max-w-2xl mx-auto justify-items-center">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 max-w-4xl mx-auto">
             <TeamMember 
               name="Koji Ogasawara" 
               role="Co-Fundador & Diretor De Estratégia"
@@ -228,6 +234,13 @@ const Index = () => {
               name="Hassan Deraoui" 
               role="Co-Fundador & Developer Visual"
               imageSrc="/img/Hassan.jpg"
+            />
+
+            <TeamMember 
+              name="Wallace Lima" 
+              role="Especialista em Broadcast & Infraestrutura de Streaming"
+              imageSrc="/img/Wallace.jpg"
+              imagePosition="top"
             />
           </div>
           <div className="mt-16 text-center">
