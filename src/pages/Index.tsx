@@ -451,7 +451,7 @@ const Index = () => {
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 max-w-5xl mx-auto">
             <TeamMember 
               name="Koji Ogasawara" 
-              role="Co-Fundador & Diretor De Estratégia"
+              role="Co-Founder · Audiovisual Specialist & Prompt Engineer"
               imageSrc="/img/Koji.JPG"
               imagePosition="top"
               bio="Estrategista de marketing, narrativa e direção de fotografia, conectando análise de dados à construção de marca."
