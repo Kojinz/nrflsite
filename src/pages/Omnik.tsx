@@ -6,6 +6,7 @@ import {
   Activity,
   Aperture,
   Apple,
+  Check,
   Download,
   Monitor,
   ArrowRight,
@@ -54,6 +55,8 @@ const copy = {
     dlWinNote: 'Unzip the folder and run OMNIK.exe. If Windows SmartScreen appears, click More info > Run anyway.',
     dlButton: 'Download',
     trial: '7-day free trial with everything unlocked. Lifetime license, 2 computers.',
+    trust: ['No subscription', '7-day free trial', 'Secure checkout by Gumroad', 'macOS and Windows'],
+    version: 'Current version',
     shotCaption: 'Real OMNIK screenshot analyzing a night street frame.',
     scopesTitle: '11 scopes, one window',
     scopesLead: 'Mix and match any scope in any panel, float them to a second window or monitor, and save the layout.',
@@ -99,6 +102,7 @@ const copy = {
       ['How do I activate?', 'Open OMNIK, go to Help > License, paste the key from your Gumroad receipt and click Activate.'],
       ['Can I move my license to another computer?', 'Yes. Deactivate it on the old computer (Help > License) and activate it on the new one.'],
       ['What happens when the updates year ends?', 'Nothing stops working. Versions released until then are yours forever; renew only if you want newer versions.'],
+      ['Which capture cards and cameras work?', 'Any device macOS or Windows sees as a video input: UVC, HDMI and SDI capture cards, webcams and virtual cameras such as OBS and NDI. You can also analyze a screen, an image or a test signal.'],
       ['Do I need internet?', 'Only to activate. After that OMNIK checks the license once a day and keeps working up to 7 days offline.'],
     ],
     support: 'Support',
@@ -121,6 +125,8 @@ const copy = {
     dlWinNote: 'Descompacte a pasta e abra o OMNIK.exe. Se aparecer o SmartScreen do Windows, clique em Mais informações > Executar assim mesmo.',
     dlButton: 'Baixar',
     trial: 'Teste de 7 dias com tudo liberado. Licença vitalícia, 2 computadores.',
+    trust: ['Sem assinatura', 'Teste grátis de 7 dias', 'Pagamento seguro pela Gumroad', 'macOS e Windows'],
+    version: 'Versão atual',
     shotCaption: 'Captura real do OMNIK analisando um quadro de rua à noite.',
     scopesTitle: '11 scopes numa janela só',
     scopesLead: 'Combine qualquer scope em qualquer painel, leve para uma segunda janela ou monitor e salve o layout.',
@@ -166,6 +172,7 @@ const copy = {
       ['Como eu ativo?', 'Abra o OMNIK, vá em Ajuda > Licença, cole a KEY do recibo da Gumroad e clique em Ativar.'],
       ['Posso passar a licença para outro computador?', 'Pode. Desative no computador antigo (Ajuda > Licença) e ative no novo.'],
       ['O que acontece quando acaba o ano de atualizações?', 'Nada para de funcionar. As versões lançadas até lá são suas para sempre; renove só se quiser as mais novas.'],
+      ['Quais placas de captura e câmeras funcionam?', 'Qualquer dispositivo que o macOS ou o Windows reconheça como entrada de vídeo: placas UVC, HDMI e SDI, webcams e câmeras virtuais como OBS e NDI. Também dá para analisar uma tela, uma imagem ou um sinal de teste.'],
       ['Preciso de internet?', 'Só para ativar. Depois o OMNIK confere a licença uma vez por dia e funciona até 7 dias sem conexão.'],
     ],
     support: 'Suporte',
@@ -188,6 +195,8 @@ const copy = {
     dlWinNote: 'Descomprime la carpeta y abre OMNIK.exe. Si aparece SmartScreen de Windows, haz clic en Más información > Ejecutar de todas formas.',
     dlButton: 'Descargar',
     trial: 'Prueba de 7 días con todo desbloqueado. Licencia vitalicia, 2 equipos.',
+    trust: ['Sin suscripción', 'Prueba gratis de 7 días', 'Pago seguro con Gumroad', 'macOS y Windows'],
+    version: 'Versión actual',
     shotCaption: 'Captura real de OMNIK analizando un cuadro de calle nocturna.',
     scopesTitle: '11 scopes en una sola ventana',
     scopesLead: 'Combina cualquier scope en cualquier panel, llévalo a una segunda ventana o monitor y guarda el diseño.',
@@ -233,6 +242,7 @@ const copy = {
       ['¿Cómo lo activo?', 'Abre OMNIK, ve a Ayuda > Licencia, pega la KEY del recibo de Gumroad y haz clic en Activar.'],
       ['¿Puedo pasar la licencia a otro equipo?', 'Sí. Desactívala en el equipo anterior (Ayuda > Licencia) y actívala en el nuevo.'],
       ['¿Qué pasa cuando termina el año de actualizaciones?', 'Nada deja de funcionar. Las versiones lanzadas hasta entonces son tuyas para siempre; renueva solo si quieres las nuevas.'],
+      ['¿Qué tarjetas de captura y cámaras funcionan?', 'Cualquier dispositivo que macOS o Windows reconozca como entrada de video: tarjetas UVC, HDMI y SDI, webcams y cámaras virtuales como OBS y NDI. También puedes analizar una pantalla, una imagen o una señal de prueba.'],
       ['¿Necesito internet?', 'Solo para activar. Después OMNIK verifica la licencia una vez al día y funciona hasta 7 días sin conexión.'],
     ],
     support: 'Soporte',
@@ -290,7 +300,15 @@ const BuyButton: React.FC<{ label: string; className?: string }> = ({ label, cla
 
 const Omnik: React.FC = () => {
   const [lang, setLang] = useState<Lang>(initialLang);
+  const [version, setVersion] = useState<string | null>(null);
   const t = copy[lang];
+
+  useEffect(() => {
+    fetch('https://license.neuraframelab.com/download/latest.json')
+      .then((r) => r.json())
+      .then((d) => setVersion(d?.mac?.version ?? d?.windows?.version ?? null))
+      .catch(() => setVersion(null));
+  }, []);
 
   useEffect(() => {
     try {
@@ -304,8 +322,12 @@ const Omnik: React.FC = () => {
   useEffect(() => {
     const previous = document.title;
     document.title = 'OMNIK · Real-time video scopes · NeuraFrameLab';
+    const meta = document.querySelector('meta[name="description"]');
+    const previousDescription = meta?.getAttribute('content') ?? '';
+    meta?.setAttribute('content', 'OMNIK: real-time video scopes for macOS and Windows. Waveform, parade, vectorscope, CIE, histogram, false color and exposure in stops. 7-day free trial.');
     return () => {
       document.title = previous;
+      meta?.setAttribute('content', previousDescription);
     };
   }, []);
 
@@ -337,7 +359,7 @@ const Omnik: React.FC = () => {
             </div>
             <a
               href={BUY_URL}
-              className="hidden sm:inline-flex px-4 py-2 rounded-full text-xs tracking-widest font-space border border-neura-orange/50 bg-neura-orange/10 hover:bg-gradient-to-r hover:from-neura-orange-gradient hover:to-neura-yellow hover:text-black hover:border-transparent transition-all"
+              className="inline-flex px-3 sm:px-4 py-2 rounded-full text-xs tracking-widest font-space border border-neura-orange/50 bg-neura-orange/10 hover:bg-gradient-to-r hover:from-neura-orange-gradient hover:to-neura-yellow hover:text-black hover:border-transparent transition-all"
             >
               {PRICE}
             </a>
@@ -370,6 +392,14 @@ const Omnik: React.FC = () => {
             </a>
           </div>
           <p className="mt-4 text-xs md:text-sm text-white/50">{t.trial}</p>
+          <ul className="mt-6 flex flex-wrap justify-center gap-x-5 gap-y-2 text-xs font-space tracking-wide text-white/70">
+            {t.trust.map((item) => (
+              <li key={item} className="flex items-center gap-2">
+                <Check className="w-3.5 h-3.5 text-neura-orange" />
+                {item}
+              </li>
+            ))}
+          </ul>
         </div>
 
         <figure className="relative max-w-6xl mx-auto mt-14">
@@ -481,6 +511,11 @@ const Omnik: React.FC = () => {
         <div className="max-w-6xl mx-auto">
           <h2 className="text-3xl md:text-5xl font-space font-bold">{t.dlTitle}</h2>
           <p className="mt-4 text-white/65 max-w-2xl">{t.dlLead}</p>
+          {version && (
+            <p className="mt-2 text-sm font-space text-neura-yellow">
+              {t.version}: {version}
+            </p>
+          )}
           <div className="mt-10 grid md:grid-cols-2 gap-6">
             {(
               [
