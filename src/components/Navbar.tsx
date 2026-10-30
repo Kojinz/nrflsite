@@ -8,6 +8,7 @@ const navItems = [
   { label: 'SOBRE', href: '#sobre' },
   { label: 'SERVIÇOS', href: '#servicos' },
   { label: 'EQUIPE', href: '#equipe' },
+  { label: 'OMNIK', href: '/omnik' },
   { label: 'CONTATO', href: '#contato' },
 ];
 
