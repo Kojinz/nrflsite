@@ -65,6 +65,8 @@ const copy = {
       ['Diamond & Arrowhead', 'Gamut checks the way broadcast engineers read them.'],
       ['Hue vs Sat · Luma vs Sat', 'Find oversaturated hues and clipped highlights at a glance.'],
     ],
+    motionTitle: 'See it react',
+    motionLead: 'Every frame of this live concert clip went through OMNIK: CIE 1931, Diamond, Arrowhead, Hue vs Sat and Luma vs Sat follow the stage lights.',
     toolsTitle: 'Tools for the set, the grade and the broadcast',
     tools: [
       ['Exposure in stops', 'Zone meter, false color, zebras and focus peaking.'],
@@ -79,7 +81,7 @@ const copy = {
     ],
     galleryTitle: 'Real screenshots',
     galleryLead: 'Every interface image on this page was captured from OMNIK itself.',
-    gallery: ['Night street', 'Golden hour portrait', 'Desert at sunset', 'Live concert'],
+    gallery: ['Night street', 'Golden hour portrait', 'Desert at sunset', 'Live concert', 'CIE, Diamond, Arrowhead, Hue and Luma vs Sat · concert', 'CIE, Diamond, Arrowhead, Hue and Luma vs Sat · desert'],
     pricingTitle: 'One price. Yours forever.',
     pricingLead: 'No subscription. Pay once and keep every version released during your updates year.',
     planName: 'OMNIK license',
@@ -130,6 +132,8 @@ const copy = {
       ['Diamond e Arrowhead', 'Conferência de gamut do jeito que a engenharia de broadcast lê.'],
       ['Hue vs Sat · Luma vs Sat', 'Encontre matizes saturados demais e altas luzes estouradas num relance.'],
     ],
+    motionTitle: 'Veja reagir',
+    motionLead: 'Cada quadro deste clipe de show passou pelo OMNIK: CIE 1931, Diamond, Arrowhead, Hue vs Sat e Luma vs Sat acompanham as luzes do palco.',
     toolsTitle: 'Ferramentas para o set, a cor e o broadcast',
     tools: [
       ['Exposição em stops', 'Medidor por zona, false color, zebras e focus peaking.'],
@@ -144,7 +148,7 @@ const copy = {
     ],
     galleryTitle: 'Capturas reais',
     galleryLead: 'Todas as imagens da interface nesta página foram capturadas do próprio OMNIK.',
-    gallery: ['Rua à noite', 'Retrato na hora dourada', 'Deserto ao pôr do sol', 'Show ao vivo'],
+    gallery: ['Rua à noite', 'Retrato na hora dourada', 'Deserto ao pôr do sol', 'Show ao vivo', 'CIE, Diamond, Arrowhead, Hue e Luma vs Sat · show', 'CIE, Diamond, Arrowhead, Hue e Luma vs Sat · deserto'],
     pricingTitle: 'Um preço. Seu para sempre.',
     pricingLead: 'Sem assinatura. Pague uma vez e fique com todas as versões lançadas no seu ano de atualizações.',
     planName: 'Licença do OMNIK',
@@ -195,6 +199,8 @@ const copy = {
       ['Diamond y Arrowhead', 'Control de gamut como lo leen los ingenieros de broadcast.'],
       ['Hue vs Sat · Luma vs Sat', 'Encuentra tonos sobresaturados y altas luces quemadas de un vistazo.'],
     ],
+    motionTitle: 'Míralo reaccionar',
+    motionLead: 'Cada cuadro de este clip de concierto pasó por OMNIK: CIE 1931, Diamond, Arrowhead, Hue vs Sat y Luma vs Sat siguen las luces del escenario.',
     toolsTitle: 'Herramientas para el set, el color y el broadcast',
     tools: [
       ['Exposición en stops', 'Medidor por zonas, false color, cebras y focus peaking.'],
@@ -209,7 +215,7 @@ const copy = {
     ],
     galleryTitle: 'Capturas reales',
     galleryLead: 'Todas las imágenes de la interfaz en esta página se capturaron del propio OMNIK.',
-    gallery: ['Calle nocturna', 'Retrato en la hora dorada', 'Desierto al atardecer', 'Concierto en vivo'],
+    gallery: ['Calle nocturna', 'Retrato en la hora dorada', 'Desierto al atardecer', 'Concierto en vivo', 'CIE, Diamond, Arrowhead, Hue y Luma vs Sat · concierto', 'CIE, Diamond, Arrowhead, Hue y Luma vs Sat · desierto'],
     pricingTitle: 'Un precio. Tuyo para siempre.',
     pricingLead: 'Sin suscripción. Paga una vez y quédate con todas las versiones lanzadas en tu año de actualizaciones.',
     planName: 'Licencia de OMNIK',
@@ -235,8 +241,16 @@ const copy = {
 } as const;
 
 const toolIcons = [Sun, Crosshair, Columns2, Aperture, Grid3x3, FileText, MonitorPlay, ScanLine, Languages];
-const scopeImages = ['scope-waveform', 'scope-vectorscope', null, 'scope-histogram', null, null] as const;
-const galleryShots = ['neon', 'portrait', 'canyon', 'concert'] as const;
+// Recortes reais de cada scope (Diamond/Arrowhead e Hue/Luma vs Sat aparecem lado a lado).
+const scopeImages: (readonly string[])[] = [
+  ['scope-waveform'],
+  ['scope-vectorscope'],
+  ['scope-cie-tight'],
+  ['scope-histogram'],
+  ['scope-diamond-tight', 'scope-arrowhead-tight'],
+  ['scope-huesat', 'scope-lumasat'],
+];
+const galleryShots = ['neon', 'portrait', 'canyon', 'concert', 'gamut-concert', 'gamut-canyon'] as const;
 
 function initialLang(): Lang {
   const saved = (() => {
@@ -374,16 +388,16 @@ const Omnik: React.FC = () => {
           <p className="mt-4 text-white/65 max-w-2xl">{t.scopesLead}</p>
           <div className="mt-10 grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
             {t.scopes.map(([title, text], i) => {
-              const img = scopeImages[i];
+              const imgs = scopeImages[i] ?? [];
               return (
                 <div key={title} className="rounded-xl border border-white/10 bg-white/[0.03] overflow-hidden flex flex-col">
-                  {img ? (
-                    <div className="bg-[#1b1b1e] aspect-[16/7] flex items-center justify-center overflow-hidden">
-                      <Media name={img} alt={title} className="w-full h-full object-contain" />
-                    </div>
-                  ) : (
-                    <div className="h-1 bg-gradient-to-r from-neura-orange-gradient via-neura-yellow to-cyan-400" />
-                  )}
+                  <div className={cn('bg-[#1b1b1e] aspect-[16/7] grid gap-px', imgs.length > 1 && (i === 5 ? 'grid-rows-2' : 'grid-cols-2'))}>
+                    {imgs.map((img) => (
+                      <div key={img} className="flex items-center justify-center overflow-hidden bg-[#1b1b1e]">
+                        <Media name={img} alt={title} className="w-full h-full object-contain" />
+                      </div>
+                    ))}
+                  </div>
                   <div className="p-5">
                     <h3 className="font-space font-bold text-lg">{title}</h3>
                     <p className="mt-2 text-sm text-white/65 leading-relaxed">{text}</p>
@@ -399,6 +413,26 @@ const Omnik: React.FC = () => {
             <div className="rounded-xl border border-white/10 bg-[#1b1b1e] overflow-hidden hidden md:block">
               <Media name="scope-exposure" alt="Exposure" className="h-full w-auto max-h-[420px] block" />
             </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Em movimento */}
+      <section className="px-4 md:px-6 pb-16 md:pb-24">
+        <div className="max-w-6xl mx-auto">
+          <h2 className="text-3xl md:text-5xl font-space font-bold">{t.motionTitle}</h2>
+          <p className="mt-4 text-white/65 max-w-3xl">{t.motionLead}</p>
+          <div className="mt-8 rounded-xl overflow-hidden border border-white/10 bg-black">
+            <video
+              className="w-full h-auto block"
+              src="/omnik-media/scopes-motion.mp4"
+              poster="/omnik-media/scopes-motion-poster.jpg"
+              autoPlay
+              muted
+              loop
+              playsInline
+              preload="metadata"
+            />
           </div>
         </div>
       </section>
