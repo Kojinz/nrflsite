@@ -456,6 +456,7 @@ const Index = () => {
               imagePosition="top"
               bio="Estrategista de marketing, narrativa e direção de fotografia, conectando análise de dados à construção de marca."
               tags={["Estratégia", "Narrativa", "Direção de Fotografia"]}
+              linkedinUrl="https://www.linkedin.com/in/kojilife/"
             />
           
             <TeamMember 
@@ -464,6 +465,7 @@ const Index = () => {
               imageSrc="/img/Hassan.jpg"
               bio="Especialista em desenvolvimento visual, interfaces interativas, identidade digital e experiências web de alta conversão."
               tags={["Visual Dev", "UI/UX", "Creative Tech"]}
+              linkedinUrl="https://www.linkedin.com/in/hderaoui/"
             />
 
             <TeamMember 
