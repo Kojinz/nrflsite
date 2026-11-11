@@ -5,7 +5,7 @@ import { ExternalLink } from 'lucide-react';
 interface TeamMemberProps {
   name: string;
   role: string;
-  imageSrc: string;
+  imageSrc?: string;
   className?: string;
   imagePosition?: string;
   bio?: string;
@@ -26,17 +26,29 @@ const TeamMember: React.FC<TeamMemberProps> = ({
   return (
     <div className={cn("group flex flex-col", className)}>
       <div className="relative overflow-hidden rounded-xl mb-4 aspect-square border border-white/10 group-hover:border-neura-orange/50 transition-all duration-500 shadow-lg">
-        <img 
-          src={imageSrc} 
-          alt={name} 
-          className={cn(
-            "w-full h-full object-cover grayscale group-hover:grayscale-0 group-hover:scale-105 transition-all duration-500",
-            {
-              'object-[center_20%]': imagePosition === 'top',
-              'object-[center_80%]': imagePosition === 'bottom'
-            }
-          )}
-        />
+        {imageSrc ? (
+          <img 
+            src={imageSrc} 
+            alt={name} 
+            className={cn(
+              "w-full h-full object-cover grayscale group-hover:grayscale-0 group-hover:scale-105 transition-all duration-500",
+              {
+                'object-[center_20%]': imagePosition === 'top',
+                'object-[center_80%]': imagePosition === 'bottom'
+              }
+            )}
+          />
+        ) : (
+          <div
+            role="img"
+            aria-label={name}
+            className="w-full h-full flex items-center justify-center bg-gradient-to-br from-white/10 to-white/[0.02] group-hover:from-neura-orange/25 transition-all duration-500"
+          >
+            <span className="font-space text-5xl font-bold text-white/40 group-hover:text-neura-yellow transition-colors duration-500">
+              {name.split(' ').filter(Boolean).map((p) => p[0]).slice(0, 2).join('').toUpperCase()}
+            </span>
+          </div>
+        )}
         <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/35 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex flex-col justify-end p-5">
           {bio && (
             <p className="text-xs md:text-sm text-white/90 leading-snug mb-3 translate-y-3 group-hover:translate-y-0 transition-transform duration-300">

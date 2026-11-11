@@ -448,7 +448,7 @@ const Index = () => {
           <p className="text-white/65 text-sm md:text-base mb-10 max-w-xl">
             Passe o cursor sobre os integrantes para conhecer as especialidades de cada área.
           </p>
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 max-w-5xl mx-auto">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 max-w-6xl mx-auto">
             <TeamMember 
               name="Koji Ogasawara" 
               role="Co-Founder · Audiovisual Specialist & Prompt Engineer"
@@ -474,6 +474,15 @@ const Index = () => {
               bio="Formado em Rádio, TV e Internet. Atua desde 2017 em broadcast, operação de áudio/vídeo e transmissões de eventos, shows e workshops."
               tags={["Broadcast & Live Events", "Tricaster & OBS", "Encoders NVX/Matrox"]}
               linkedinUrl="https://www.linkedin.com/in/wallace-lima/"
+            />
+
+            <TeamMember 
+              name="Joelto Mata" 
+              role="Produtor Audiovisual · Transmissão ao Vivo & Montagem de Estúdios"
+              imageSrc="/img/Joelto.jpg"
+              bio="Produtor audiovisual especializado em transmissões ao vivo e na montagem de estúdios, do projeto técnico à operação no dia do evento."
+              tags={["Transmissão ao Vivo", "Montagem de Estúdios", "Produção Audiovisual"]}
+              linkedinUrl="https://www.linkedin.com/in/joelto-mata-45a659163/"
             />
           </div>
           <div className="mt-16 text-center">
